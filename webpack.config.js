@@ -38,7 +38,7 @@ module.exports = (env = {}) => {
             }),
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                hash: 'true',
+                //hash: 'true',
                 template: 'src/index.html',
                 inject: 'head',
             }),

@@ -1,5 +1,5 @@
 import ReadingPositionIndicator from './ReadingPositionIndicator';
-//import styles  from './demo.css'; // apply demo styling
+import styles  from './demo.css'; // apply demo styling
 
 /* -------------------------------------------------------------- 
   Demo 
