@@ -3,7 +3,7 @@ const webpack = require('webpack'),
     CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
-    
+
 module.exports = (env = {}) => {
 
     // Variables set by npm scripts in package.json
@@ -15,12 +15,15 @@ module.exports = (env = {}) => {
         context: path.resolve('./'),
         entry: {
             demo: ['./src/assets/demo'],
+            rpi: ['./src/assets/rpi'],            
         },
         output: {
             path: path.join(__dirname, 'dist'),
             publicPath: '',
             filename: '[name].bundle.js',
             chunkFilename: '[id].chunk.js',
+            libraryTarget: "var",        
+            library: "readingPositionIndicator"
         },
         devServer: {
             open: true,
@@ -34,42 +37,53 @@ module.exports = (env = {}) => {
                 PLATFORM: JSON.stringify(platform)
             }),
             new HtmlWebpackPlugin({
-                template: 'src/index.html',                
+                template: 'src/index.html',
+            }),
+             new ExtractTextPlugin({
+                filename: '[name].bundle.css',
+                allChunks: true,
             }),
         ],
         module: {
-            rules: [
+            rules: [                
                 {
                     test: /\.js$/,
                     loader: 'babel-loader',
-                    exclude: /node_modules/
+                    exclude: [/node_modules/],
                 },
                 {
                     test: /\.html$/,
                     loader: 'html-loader',
-                    exclude: /node_modules/
+                    exclude: [/node_modules/],
                 },
                 {
                     test: /\.css$/,
+                    loader: ExtractTextPlugin.extract({
+                        loader: 'css-loader?importLoaders=1',
+                    }),
+                    exclude: [/node_modules/],
+                },
+                {
+                    test: /\.(sass|scss)$/,
                     use: [
-                        { loader: 'style-loader' },
-                        { loader: 'css-loader' }
-                    ],
-                    exclude: /node_modules/
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader',
+                    ]
                 },
                 {
                     test: /\.(png|gif|jpg)$/,
                     loader: 'url-loader',
                     options: { limit: '25000' },
-                    exclude: /node_modules/,
+                    exclude: [/node_modules/],
                 },
                 {
                     test: /\.(ttf|eot|svg)$/,
                     loader: 'file-loader',
-                    exclude: /node_modules/,
+                    exclude: [/node_modules/],
                 }
             ]
-        },                
+        },
         resolve: {
             extensions: ['.js'],
         },

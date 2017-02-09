@@ -1,10 +1,10 @@
 import ReadingPositionIndicator from './rpi';
-import css from './demo.css'; // apply demo styling
+import styles  from './demo.css'; // apply demo styling
 
 /* -------------------------------------------------------------- 
   Demo 
 */
-let readingPositionIndicator = new ReadingPositionIndicator({
+var readingPositionIndicator = new ReadingPositionIndicator({
   color: 'dodgerblue',
   showPercentage: true,
   percentage: {
