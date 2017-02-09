@@ -99,7 +99,17 @@
         whole of her lower arm towards the viewer.</p>
     </article>
 
-<script>  console.log('app');</script>
+<script>  
+var rpi = new ReadingPositionIndicator({
+  color: 'navyblue',
+  showPercentage: true,
+  percentage: {
+    show: true,
+    opacity: .3,
+    color: '#000',
+  },
+}).init();
+</script>
 </body>
 
 </html>

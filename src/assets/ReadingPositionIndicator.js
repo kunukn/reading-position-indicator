@@ -1,4 +1,5 @@
-import styles  from './rpi.css'; // apply library styling
+// apply library styling
+import styles  from './ReadingPositionIndicator.css'; 
 
 /* --------------------------------------------------------------
   ReadingPositionIndicator library 

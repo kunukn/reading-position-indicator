@@ -23,7 +23,7 @@ module.exports = (env = {}) => {
             filename: '[name].bundle.js',
             chunkFilename: '[id].chunk.js',
             libraryTarget: "umd",        
-            library: "Rpi"
+            library: "ReadingPositionIndicator"
         },
         devServer: {
             open: true,
@@ -37,7 +37,10 @@ module.exports = (env = {}) => {
                 PLATFORM: JSON.stringify(platform)
             }),
             new HtmlWebpackPlugin({
+                filename: 'index.html',
+                hash: 'true',
                 template: 'src/index.html',
+                inject: 'head',
             }),
              new ExtractTextPlugin({
                 filename: '[name].bundle.css',

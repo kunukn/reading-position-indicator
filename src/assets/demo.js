@@ -1,19 +1,19 @@
-import ReadingPositionIndicator from './rpi';
+import ReadingPositionIndicator from './ReadingPositionIndicator';
 //import styles  from './demo.css'; // apply demo styling
 
 /* -------------------------------------------------------------- 
   Demo 
 */
-var readingPositionIndicator = new ReadingPositionIndicator({
-  color: 'dodgerblue',
+var rpi = new ReadingPositionIndicator({
+  color: 'navyblue',
   showPercentage: true,
   percentage: {
     show: true,
-    opacity: .4,
+    opacity: .3,
     color: '#000',
   },
 }).init();
 
-//readingPositionIndicator.destroy(); // use when to be removed
+//rpi.destroy(); // use when to be removed
 
 export default readingPositionIndicator;

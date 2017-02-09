@@ -1,1 +1,1 @@
-module.exports = require('./assets/rpi').default;
+module.exports = require('./assets/ReadingPositionIndicator').default;
