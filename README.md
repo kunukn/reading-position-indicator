@@ -1,18 +1,18 @@
 # reading position indicator
 Small mobile friendly reading position indicator library with no dependencies.
 
-# about
-A position indicator at the top of the page to visually display how far you have scrolled on a webpage.
-Tested with Chrome, Safari, Firefox, Edge, IE10+, iOS7+, Android 4.3+
-
-Build with focus on simplicity, performance and a11y. Using transform translate and rAF for throttling scroll update and debounce for resize update. 
-
-Using aria tags for the screen readers. 
-
-The progress element has not been used because the code gets messy with vendor prefixes and to much boilerplate code when adding fallback elements inside the progress element.
-
 # demo
 http://codepen.io/kunukn/full/zNJqEE
+
+# about
+A position indicator at the top of the page to visually display how far you have scrolled on a webpage.
+
+Build with focus on simplicity, performance and a11y. 
+Using transform translate for best performance. rAF for throttling scroll update and debounce for resize update. 
+
+Aria tags are used to support screen readers. 
+
+The progress element `<progress>` has not been used because the code gets messy with vendor prefixes and removing the defailt styles that comes with each browser. It gets even messier when fallback elements are added inside the progress element to support older browsers.
 
 
 # browser support
@@ -26,6 +26,8 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 * js `~5kb`
 * css `<1kb`
 
+# test
+Tested with latest Chrome, Safari, Firefox, Edge, IE10+, iOS7+, Android 4.3+
 
 # usage
 
@@ -63,8 +65,8 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 <div id="rpi-progress-bar-container" class="rpi-progress-bar-container">
       <div class="rpi-progress-bar-container__position"></div>
       <div class="rpi-progress-bar-container__percentage"></div>
-  </div>
-
+</div>
+```
 
 ### configuration example
 
@@ -81,6 +83,6 @@ var rpi = new ReadingPositionIndicator({
 ```
 
 
-# License
+# license
 
 MIT License: http://opensource.org/licenses/MIT
