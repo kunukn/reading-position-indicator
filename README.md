@@ -21,41 +21,44 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 ```html
 <head>
   ...
-  <link rel="stylesheet" href="rpi.css">
+  <link rel="stylesheet" href="rpi.bundle.css">
   ...
 </head>
 <body>
   <!-- library markup -->
-  <div 
+  <div id="rpi-progress-bar-container" 
     class="rpi-progress-bar-container" 
-    id="rpi-progress-bar-container" 
     role="progressbar" 
     aria-valuemin="0" 
     aria-valuemax="100"
     aria-valuenow="0">
-
       <div class="rpi-progress-bar-container__position" aria-hidden="true"></div>
       <div class="rpi-progress-bar-container__percentage"></div>
-
   </div>
   <!-- end library markup -->
+  
+       ...          
        
-       ...    
-       
-       <script src="rpi.js"></script> 
-       <script>
-        var readingPositionIndicator = new ReadingPositionIndicator({
-          color: 'dodgerblue',
+       <script src="rpi.bundle.js"></script> <!-- library -->
+       <script>new ReadingPositionIndicator().init();</script> <!-- usage -->
+ </body>
+```
+
+### configuration example
+
+```javascript
+var rpi = new ReadingPositionIndicator({
+          color: 'navyblue',
           showPercentage: true,
           percentage: {
             show: true,
-            opacity: .4,
+            opacity: .3,
             color: '#000',
           },
         }).init();
-       </script>
- </body>
+//rpi.destroy(); // use when to be removed
 ```
+
 
 # License
 
