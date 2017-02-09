@@ -1,11 +1,18 @@
 # reading position indicator
-Vanilla JS mobile friendly reading position indicator library
+Small mobile friendly reading position indicator library with no dependencies.
 
 # about
 A position indicator at the top of the page to visually display how far you have scrolled on a webpage.
+Tested with Chrome, Safari, Firefox, Edge, IE10+, iOS7+, Android 4.3+
+
+Build with focus on simplicity, performance and a11y. Using transform translate and rAF for throttling scroll update and debounce for resize update. 
+
+Using aria tags for the screen readers. 
+
+The progress element has not been used because the code gets messy with vendor prefixes and to much boilerplate code when adding fallback elements inside the progress element.
 
 # demo
-http://codepen.io/kunukn/pen/zNJqEE
+http://codepen.io/kunukn/full/zNJqEE
 
 
 # browser support
@@ -13,6 +20,12 @@ http://codepen.io/kunukn/pen/zNJqEE
 ![IE](https://cloud.githubusercontent.com/assets/398893/3528325/20373e76-078e-11e4-8e3a-1cb86cf506f0.png) | ![Chrome](https://cloud.githubusercontent.com/assets/398893/3528328/23bc7bc4-078e-11e4-8752-ba2809bf5cce.png) | ![Firefox](https://cloud.githubusercontent.com/assets/398893/3528329/26283ab0-078e-11e4-84d4-db2cf1009953.png) | ![Opera](https://cloud.githubusercontent.com/assets/398893/3528330/27ec9fa8-078e-11e4-95cb-709fd11dac16.png) | ![Safari](https://cloud.githubusercontent.com/assets/398893/3528331/29df8618-078e-11e4-8e3e-ed8ac738693f.png)
 --- | --- | --- | --- | --- |
 IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
+
+
+# size
+* js `~5kb`
+* css `<1kb`
+
 
 # usage
 
@@ -34,8 +47,8 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
     aria-valuenow="0">
       <div class="rpi-progress-bar-container__position" aria-hidden="true"></div>
       <div class="rpi-progress-bar-container__percentage"></div>
-  </div>
-  <!-- end library markup -->
+  </div>
+  <!-- end library markup -->
   
        ...          
        
@@ -44,12 +57,20 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
  </body>
 ```
 
+### minimum markup required
+
+```html
+<div id="rpi-progress-bar-container" class="rpi-progress-bar-container">
+      <div class="rpi-progress-bar-container__position"></div>
+      <div class="rpi-progress-bar-container__percentage"></div>
+  </div>
+
+
 ### configuration example
 
 ```javascript
 var rpi = new ReadingPositionIndicator({
-          color: 'navyblue',
-          showPercentage: true,
+          color: 'navyblue', // progress bar color
           percentage: {
             show: true,
             opacity: .3,
