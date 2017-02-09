@@ -12,6 +12,7 @@ export default class ReadingPositionIndicator {
       opacity: null,
     }
   }) {
+    props.percentage = props.percentage || {};
     this.props = props;
     this.scroll = {
       maxHeight: 1,

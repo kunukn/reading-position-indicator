@@ -14,16 +14,16 @@ module.exports = (env = {}) => {
         devtool: 'eval',
         context: path.resolve('./'),
         entry: {
-            demo: ['./src/assets/demo'],
-            rpi: ['./src/assets/rpi'],            
+            //demo: ['./src/assets/demo'],
+            rpi: ['./src/index'],            
         },
         output: {
             path: path.join(__dirname, 'dist'),
             publicPath: '',
             filename: '[name].bundle.js',
             chunkFilename: '[id].chunk.js',
-            libraryTarget: "var",        
-            library: "readingPositionIndicator"
+            libraryTarget: "umd",        
+            library: "Rpi"
         },
         devServer: {
             open: true,
