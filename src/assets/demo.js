@@ -6,7 +6,6 @@ import styles  from './demo.css'; // apply demo styling
 */
 var rpi = new ReadingPositionIndicator({
   color: 'navyblue',
-  showPercentage: true,
   percentage: {
     show: true,
     opacity: .3,
