@@ -21,7 +21,7 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 ```html
 <head>
   ...
-  <link rel="stylesheet" href="rpi.css">
+  <link rel="stylesheet" href="rpi.bundle.css">
   ...
 </head>
 <body>
@@ -42,17 +42,18 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
        
        ...    
        
-       <script src="rpi.js"></script> 
+       <script src="rpi.bundle.js"></script> 
        <script>
-        var readingPositionIndicator = new ReadingPositionIndicator({
+        var rpi = new ReadingPositionIndicator({
           color: 'dodgerblue',
           showPercentage: true,
           percentage: {
             show: true,
-            opacity: .4,
+            opacity: .3,
             color: '#000',
           },
         }).init();
+        //rpi.destroy(); // use when to be removed
        </script>
  </body>
 ```
