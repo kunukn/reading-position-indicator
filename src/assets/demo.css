@@ -1,0 +1,21 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+}
+
+article {
+  display: block;
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  max-width: 90%;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  article {
+    max-width: 70%;
+  }
+}
+article p {
+  line-height: 2;
+  margin-bottom: 2rem;
+}
