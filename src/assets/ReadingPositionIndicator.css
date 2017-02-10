@@ -24,7 +24,7 @@
   height: 4px;
   width: 100%;  
   background-color: #1E90FF;
-  background-color: 'rgba(0,0,0,.2)';
+  background-color: rgba(0,0,0,.2);
   -webkit-transform-origin: 0 50%;
           transform-origin: 0 50%;
   -webkit-transition: -webkit-transform 50ms;
