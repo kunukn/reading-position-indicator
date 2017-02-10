@@ -5,7 +5,7 @@ Small mobile friendly reading position indicator library with no dependencies.
 
 http://codepen.io/kunukn/full/zNJqEE
 
-<img src="/media/rpi.gif?raw=true" width="200">
+<img src="/media/rpi.gif?raw=true" width="300">
 
 # about
 A position indicator at the top of the page to visually display how far you have scrolled on a webpage.
