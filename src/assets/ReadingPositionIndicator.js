@@ -48,7 +48,6 @@ function getViewHeight() {
 }
 
 // https://john-dugan.com/javascript-debounce/
-
 function debounce(e, t, n) {
   /* eslint-disable */
   var a;
@@ -64,8 +63,7 @@ function debounce(e, t, n) {
   /* eslint-enable */
 }
 
-export default
-class ReadingPositionIndicator {
+export default class ReadingPositionIndicator {
   constructor(props = {
     color: null,
     percentage: {
