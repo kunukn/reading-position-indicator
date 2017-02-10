@@ -10,10 +10,10 @@ http://codepen.io/kunukn/full/zNJqEE
 # about
 A position indicator at the top of the page to visually display how far you have scrolled on a webpage.
 
-Build with focus on simplicity, performance and a11y. 
+Build with focus on **simplicity**, **performance** and **a11y**. 
 Using transform translate for best performance. rAF for throttling scroll update and debounce for resize update. 
 
-Aria tags are used to support screen readers. 
+**Aria tags** are used to support screen readers. 
 
 The progress element `<progress>` has not been used because the code gets messy with vendor prefixes and removing the default styles that comes with each browser. It gets even messier when fallback elements are added inside the progress element to support older browsers.
 
@@ -33,6 +33,12 @@ IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 Tested with latest Chrome, Safari, Firefox, Edge, IE10+, iOS7+, Android 4.3+
 
 # usage
+
+Check the **dist/index.html** for inspiration.
+
+* Add reference to `rpi.bundle.js` and `rpi.bundle.css` in the html page
+* Apply the markup structure
+* Init the library with JS
 
 ### html structure
 
