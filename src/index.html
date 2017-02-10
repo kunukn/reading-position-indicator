@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reading position indicator library</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   
   <!-- demo -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">    
   <style>
   html{
     font-size: 100%;
@@ -19,15 +19,16 @@
   }
 
   article {
+    box-sizing: border-box;
     display: block;
     -webkit-transition: 200ms;
     transition: 200ms;
-    max-width: 90%;
+    max-width: 80%;
     margin: 0 auto;
   }
   @media (min-width: 600px) {
     article {
-      max-width: 70%;
+      max-width: 60%;
     }
   }
   article p {
@@ -104,10 +105,11 @@ var rpi = new ReadingPositionIndicator({
   color: 'navyblue',
   percentage: {
     show: true,
-    opacity: .3,
+    opacity: .2,
     color: '#000',
   },
 }).init();
+// rpi.destroy(); // use when to be removed
 </script>
 </body>
 

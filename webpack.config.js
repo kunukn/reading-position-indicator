@@ -59,8 +59,7 @@ module.exports = (env = {}) => {
     return {
         devtool: isProd ? 'source-map' : 'eval',
         context: path.resolve('./'),
-        entry: {
-            //demo: ['./src/assets/demo'],
+        entry: {            
             rpi: ['./src/index']
         },
         output: {

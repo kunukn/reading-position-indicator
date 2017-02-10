@@ -1,4 +1,5 @@
 .rpi-progress-bar-container {
+  box-sizing: border-box;
   position: fixed;
   width: 100%;
   top: 0;
@@ -6,15 +7,20 @@
   padding-bottom: 20px;
 }
 .rpi-progress-bar-container__percentage {
+  box-sizing: inherit;
   position: absolute;
   top: 4px;
   left: 0;
-  width: 100%;
   height: 20px;
   color: black;
-  opacity: .2;
+  opacity: .3;
+  font-size: 16px;
+  width: auto;
+  min-width: 4em;
+  padding-left: 4px;
 }
 .rpi-progress-bar-container__position {
+  box-sizing: inherit;
   height: 4px;
   width: 100%;
   background-color: dodgerblue;
