@@ -5,6 +5,7 @@ import './ReadingPositionIndicator.css';
   ReadingPositionIndicator library
 */
 export default class ReadingPositionIndicator {
+
   constructor(props = {
     color: null,
     percentage: {
@@ -22,7 +23,7 @@ export default class ReadingPositionIndicator {
   }
 
   init() {
-    this._transformName = this._getTransformVendorPrefixAsString();
+    this._transformName = ReadingPositionIndicator.getTransformVendorPrefixAsString();
 
     this.progressBarContainerEl = document.getElementById('rpi-progress-bar-container');
     this.progressBarEl = this.progressBarContainerEl.querySelector('.rpi-progress-bar-container__position');
@@ -62,17 +63,17 @@ export default class ReadingPositionIndicator {
   }
 
   _update() {
-    this.scroll.documentHeight = this._getDocumentHeight();
-    this.scroll.viewHeight = this._getViewHeight();
+    this.scroll.documentHeight = ReadingPositionIndicator.getDocumentHeight();
+    this.scroll.viewHeight = ReadingPositionIndicator.getViewHeight();
     this.scroll.maxHeight = this.scroll.documentHeight - this.scroll.viewHeight;
-    this._updateProgressBar(this._getScrollPosition());
+    this._updateProgressBar(ReadingPositionIndicator.getScrollPosition());
   }
 
   _onScroll() {
     // https://developer.mozilla.org/en-US/docs/Web/Events/scroll
-    this.scroll.last_known_scroll_position = this._getScrollPosition();
+    this.scroll.last_known_scroll_position = ReadingPositionIndicator.getScrollPosition();
     if (!this.scroll.ticking) {
-      window.requestAnimationFrame(_ => {
+      window.requestAnimationFrame(() => {
         this._updateProgressBar(this.scroll.last_known_scroll_position);
         this.scroll.ticking = false;
       });
@@ -95,7 +96,7 @@ export default class ReadingPositionIndicator {
     }
   }
 
-  _getTransformVendorPrefixAsString() {
+  static getTransformVendorPrefixAsString() {
     // http://shouldiprefix.com/#transforms
     const el = document.createElement('div');
     const names = {
@@ -103,6 +104,8 @@ export default class ReadingPositionIndicator {
       WebkitTransition: 'webkitTransform', // iOS7+
       MsTransform: 'msTransform', // IE9+
     };
+
+  /* eslint-disable */
     for (var name in names) {
       if (el.style[name] !== undefined) {
         return names[name];
@@ -110,10 +113,11 @@ export default class ReadingPositionIndicator {
     }
     return 'transform';
   }
+  /* eslint-enable */
 
 
   // Cross-browser http://stackoverflow.com/a/11077758/815507
-  _getDocumentHeight() {
+  static getDocumentHeight() {
     return Math.max(
       document.documentElement.clientHeight,
       document.body.scrollHeight,
@@ -124,15 +128,14 @@ export default class ReadingPositionIndicator {
   }
 
   // Cross-browser
-  _getViewHeight() {
+  static getViewHeight() {
     return Math.max(
       window.innerHeight,
       0);
   }
 
   // Cross-browser
-  _getScrollPosition() {
-    // window.scrollY is buggy, e.g. for Safari not correct height
+  static getScrollPosition() {
     return window.pageYOffset || document.documentElement.scrollTop || 0;
   }
 

@@ -7,8 +7,7 @@ const webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env = {}) => {
-
-    // Variables set by npm scripts in package.json
+    
     const isProd = env.production === true;
     const nodeEnv = isProd
         ? 'production'
@@ -89,11 +88,11 @@ module.exports = (env = {}) => {
                     loader: 'babel-loader',
                     exclude: [/node_modules/]
                 },
-                {
-                    test: /\.html$/,
-                    loader: 'html-loader',
-                    exclude: [/node_modules/]
-                },
+                // {
+                //     test: /\.html$/,
+                //     loader: 'html-loader',
+                //     exclude: [/node_modules/]
+                // },
                 {
                     test: /\.css$/,
                     loader: ExtractTextPlugin.extract({ loader: 'css-loader?importLoaders=1' }),
