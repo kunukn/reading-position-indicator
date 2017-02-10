@@ -4,8 +4,68 @@ import './ReadingPositionIndicator.css';
 /* --------------------------------------------------------------
   ReadingPositionIndicator library
 */
-export default class ReadingPositionIndicator {
 
+function getTransformVendorPrefixAsString() {
+  // http://shouldiprefix.com/#transforms
+  const el = document.createElement('div');
+  const names = {
+    transform: 'transform',  // Modern
+    WebkitTransition: 'webkitTransform', // iOS7+
+    MsTransform: 'msTransform', // IE9+
+  };
+
+  /* eslint-disable */
+  for (var name in names) {
+    if (el.style[name] !== undefined) {
+      return names[name];
+    }
+  }
+  /* eslint-enable */
+  return 'transform';
+}
+
+// Cross-browser
+function getScrollPosition() {
+  return window.pageYOffset || document.documentElement.scrollTop || 0;
+}
+
+// Cross-browser http://stackoverflow.com/a/11077758/815507
+function getDocumentHeight() {
+  return Math.max(
+    document.documentElement.clientHeight,
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+  );
+}
+
+// Cross-browser
+function getViewHeight() {
+  return Math.max(
+    window.innerHeight,
+    0);
+}
+
+// https://john-dugan.com/javascript-debounce/
+
+function debounce(e, t, n) {
+  /* eslint-disable */
+  var a;
+  return function () {
+    var r = this,
+      i = arguments,
+      o = function () {
+        a = null, n || e.apply(r, i)
+      },
+      s = n && !a;
+    clearTimeout(a), a = setTimeout(o, t || 200), s && e.apply(r, i)
+  }
+  /* eslint-enable */
+}
+
+export default
+class ReadingPositionIndicator {
   constructor(props = {
     color: null,
     percentage: {
@@ -23,7 +83,7 @@ export default class ReadingPositionIndicator {
   }
 
   init() {
-    this._transformName = ReadingPositionIndicator.getTransformVendorPrefixAsString();
+    this._transformName = getTransformVendorPrefixAsString();
 
     this.progressBarContainerEl = document.getElementById('rpi-progress-bar-container');
     this.progressBarEl = this.progressBarContainerEl.querySelector('.rpi-progress-bar-container__position');
@@ -32,7 +92,7 @@ export default class ReadingPositionIndicator {
     if (this.props.color) {
       this.progressBarEl.style.background = this.props.color;
     }
-    if (this.props.percentage && this.props.percentage.show) {
+    if (this.props.percentage) {
       if (this.props.percentage.color) {
         this.progressBarPercentageEl.style.color = this.props.percentage.color;
       }
@@ -41,7 +101,7 @@ export default class ReadingPositionIndicator {
       }
     }
 
-    this._onResize = this._debounce(() => {
+    this._onResize = debounce(() => {
       this._update();
     }, 200);
 
@@ -63,15 +123,15 @@ export default class ReadingPositionIndicator {
   }
 
   _update() {
-    this.scroll.documentHeight = ReadingPositionIndicator.getDocumentHeight();
-    this.scroll.viewHeight = ReadingPositionIndicator.getViewHeight();
+    this.scroll.documentHeight = getDocumentHeight();
+    this.scroll.viewHeight = getViewHeight();
     this.scroll.maxHeight = this.scroll.documentHeight - this.scroll.viewHeight;
-    this._updateProgressBar(ReadingPositionIndicator.getScrollPosition());
+    this._updateProgressBar(getScrollPosition());
   }
 
   _onScroll() {
     // https://developer.mozilla.org/en-US/docs/Web/Events/scroll
-    this.scroll.last_known_scroll_position = ReadingPositionIndicator.getScrollPosition();
+    this.scroll.last_known_scroll_position = getScrollPosition();
     if (!this.scroll.ticking) {
       window.requestAnimationFrame(() => {
         this._updateProgressBar(this.scroll.last_known_scroll_position);
@@ -94,64 +154,5 @@ export default class ReadingPositionIndicator {
         this.progressBarPercentageEl.textContent = `${percentage}%`;
       }
     }
-  }
-
-  static getTransformVendorPrefixAsString() {
-    // http://shouldiprefix.com/#transforms
-    const el = document.createElement('div');
-    const names = {
-      transform: 'transform',  // Modern
-      WebkitTransition: 'webkitTransform', // iOS7+
-      MsTransform: 'msTransform', // IE9+
-    };
-
-  /* eslint-disable */
-    for (var name in names) {
-      if (el.style[name] !== undefined) {
-        return names[name];
-      }
-    }
-    return 'transform';
-  }
-  /* eslint-enable */
-
-
-  // Cross-browser http://stackoverflow.com/a/11077758/815507
-  static getDocumentHeight() {
-    return Math.max(
-      document.documentElement.clientHeight,
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.offsetHeight,
-    );
-  }
-
-  // Cross-browser
-  static getViewHeight() {
-    return Math.max(
-      window.innerHeight,
-      0);
-  }
-
-  // Cross-browser
-  static getScrollPosition() {
-    return window.pageYOffset || document.documentElement.scrollTop || 0;
-  }
-
-  // https://john-dugan.com/javascript-debounce/
-  /* eslint-disable */
-  _debounce(e, t, n) {
-    var a;
-    return function () {
-      var r = this,
-        i = arguments,
-        o = function () {
-          a = null, n || e.apply(r, i)
-        },
-        s = n && !a;
-      clearTimeout(a), a = setTimeout(o, t || 200), s && e.apply(r, i)
-    }
-  /* eslint-enable */
   }
 }
