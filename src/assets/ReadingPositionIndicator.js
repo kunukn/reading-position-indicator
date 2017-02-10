@@ -68,6 +68,7 @@ export default class ReadingPositionIndicator {
     color: null,
     percentage: {
       show: false,
+      displayBeforeScroll: false,
       color: null,
       opacity: null,
     },
@@ -101,9 +102,13 @@ export default class ReadingPositionIndicator {
 
     this._onResize = debounce(() => {
       this._update();
+      this._updateProgressBar(getScrollPosition());
     }, 200);
 
     this._update();
+    if (this.props.percentage && this.props.percentage.displayBeforeScroll) {
+      this._updateProgressBar(getScrollPosition());
+    }
 
     this._onScroll = this._onScroll.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -124,7 +129,6 @@ export default class ReadingPositionIndicator {
     this.scroll.documentHeight = getDocumentHeight();
     this.scroll.viewHeight = getViewHeight();
     this.scroll.maxHeight = this.scroll.documentHeight - this.scroll.viewHeight;
-    this._updateProgressBar(getScrollPosition());
   }
 
   _onScroll() {
