@@ -91,6 +91,10 @@ var rpi = new ReadingPositionIndicator({
 //rpi.destroy(); // use when to be removed
 ```
 
+# how does it work?
+
+It uses JS to calculate the document height and the viewport height to calculate the current position. The calculation is updated on scroll and resize event and the information is updated to the markup.
+
 
 # license
 
