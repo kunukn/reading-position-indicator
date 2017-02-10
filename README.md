@@ -15,7 +15,7 @@ Using transform translate for best performance. rAF for throttling scroll update
 
 Aria tags are used to support screen readers. 
 
-The progress element `<progress>` has not been used because the code gets messy with vendor prefixes and removing the defailt styles that comes with each browser. It gets even messier when fallback elements are added inside the progress element to support older browsers.
+The progress element `<progress>` has not been used because the code gets messy with vendor prefixes and removing the default styles that comes with each browser. It gets even messier when fallback elements are added inside the progress element to support older browsers.
 
 
 # browser support
