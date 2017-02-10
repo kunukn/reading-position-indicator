@@ -1,6 +1,6 @@
 {
   "name": "reading-position-indicator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reading position indicator on a webpage",
   "main": "src/index.js",
   "scripts": {
