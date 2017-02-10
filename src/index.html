@@ -9,31 +9,34 @@
   
   <!-- demo -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">    
-  <style>
-  html{
-    font-size: 100%;
-  }
+  <style>  
   body {
     font-family: 'Montserrat', sans-serif;
     position: relative;
   }
-
-  article {
+  article {    
     box-sizing: border-box;
+    font-size: 16px;
     display: block;
     -webkit-transition: 200ms;
     transition: 200ms;
-    max-width: 80%;
+    max-width: 96%;
     margin: 0 auto;
+    padding: 0 2em;
   }
-  @media (min-width: 600px) {
+  @media (min-width: 900px) {
+    article {
+      max-width: 70%;
+    }
+  }
+  @media (min-width: 1600px) {
     article {
       max-width: 60%;
     }
   }
   article p {
     line-height: 2;
-    margin-bottom: 2rem;
+    margin-bottom: 2em;
   }
   </style>
 </head>
@@ -102,7 +105,7 @@
   
 <script>  
 var rpi = new ReadingPositionIndicator({
-  color: 'navyblue',
+  color: 'rgba(0,128,255,.5)',
   percentage: {
     show: true,
     opacity: .2,

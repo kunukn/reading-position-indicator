@@ -30,7 +30,7 @@ export default class ReadingPositionIndicator {
     this.progressBarPercentageEl = this.progressBarContainerEl.querySelector('.rpi-progress-bar-container__percentage');
 
     if (this.props.color) {
-      this.progressBarEl.style.backgroundColor = this.props.color;
+      this.progressBarEl.style.background = this.props.color;
     }
     if (this.props.percentage && this.props.percentage.show) {
       if (this.props.percentage.color) {
