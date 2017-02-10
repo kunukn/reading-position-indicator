@@ -89,9 +89,9 @@ export default class ReadingPositionIndicator {
 
     if (this.props.percentage && this.props.percentage.show) {
       if (this.scroll.viewHeight >= this.scroll.documentHeight) {
-        this.progressBarPercentageEl.innerHTML = '';
+        this.progressBarPercentageEl.textContent = '';
       } else {
-        this.progressBarPercentageEl.innerHTML = `${percentage}%`;
+        this.progressBarPercentageEl.textContent = `${percentage}%`;
       }
     }
   }
