@@ -1,7 +1,7 @@
 import ReadingPositionIndicator from './ReadingPositionIndicator';
 import styles  from './demo.css'; // apply demo styling
 
-/* -------------------------------------------------------------- 
+/* --------------------------------------------------------------
   Demo 
 */
 var rpi = new ReadingPositionIndicator({

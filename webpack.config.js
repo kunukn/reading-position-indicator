@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const webpack = require('webpack'),
     path = require('path'),
     CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
@@ -22,18 +24,18 @@ module.exports = (env = {}) => {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            //hash: 'true',
+            hash: 'true',
             template: 'src/index.html',
-            inject: 'head'
+            inject: 'head',
         }),
-        new ExtractTextPlugin({filename: '[name].bundle.css', allChunks: true})
+        new ExtractTextPlugin({ filename: '[name].bundle.css', allChunks: true })
     ];
 
- 
+
     if (isProd) {
-        plugins.push(new webpack.LoaderOptionsPlugin({minimize: true, debug: false}));
+        plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }));
         plugins.push(new webpack.optimize.UglifyJsPlugin({
-            minimize: true,         
+            minimize: true,
             compress: {
                 warnings: false,
                 screw_ie8: true,
@@ -86,13 +88,15 @@ module.exports = (env = {}) => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     exclude: [/node_modules/]
-                }, {
+                },
+                {
                     test: /\.html$/,
                     loader: 'html-loader',
                     exclude: [/node_modules/]
-                }, {
+                },
+                {
                     test: /\.css$/,
-                    loader: ExtractTextPlugin.extract({loader: 'css-loader?importLoaders=1'}),
+                    loader: ExtractTextPlugin.extract({ loader: 'css-loader?importLoaders=1' }),
                     exclude: [/node_modules/]
                 }, {
                     test: /\.(sass|scss)$/,
@@ -117,3 +121,5 @@ module.exports = (env = {}) => {
         externals: {}
     }
 };
+
+/* eslint-enable */
