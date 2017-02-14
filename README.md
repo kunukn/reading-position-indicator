@@ -81,7 +81,7 @@ Check the **dist/index.html** for inspiration.
 
 ```javascript
 var rpi = new ReadingPositionIndicator({
-          color: 'navyblue', // progress bar color
+          color: 'royalblue', // progress bar color
           percentage: {
             show: true,
             opacity: .3,
