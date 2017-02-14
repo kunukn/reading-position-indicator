@@ -51,7 +51,6 @@ Check the **dist/index.html** for inspiration.
 <body>
   <!-- library markup -->
   <div id="rpi-progress-bar-container" 
-    class="rpi-progress-bar-container" 
     role="progressbar" 
     aria-valuemin="0" 
     aria-valuemax="100"
@@ -71,7 +70,7 @@ Check the **dist/index.html** for inspiration.
 ### minimum markup required
 
 ```html
-<div id="rpi-progress-bar-container" class="rpi-progress-bar-container">
+<div id="rpi-progress-bar-container">
       <div class="rpi-progress-bar-container__position"></div>
       <div class="rpi-progress-bar-container__percentage"></div>
 </div>
