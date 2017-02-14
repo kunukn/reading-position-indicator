@@ -1,4 +1,4 @@
-.rpi-progress-bar-container {
+[id="rpi-progress-bar-container"] {
   box-sizing: border-box;
   position: fixed;
   width: 100%;

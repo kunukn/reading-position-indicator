@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.0.3
+
+* CSS refactoring, simplify and remove a class
+
 ### 1.0.2
 
 * Add displayBeforeScroll to configuration
