@@ -25,6 +25,11 @@ The progress element `<progress>` has not been used because the code gets messy 
 IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 
+# npm
+
+https://www.npmjs.com/package/reading-position-indicator
+
+
 # size
 * js `~5kb`
 * css `<1kb`
