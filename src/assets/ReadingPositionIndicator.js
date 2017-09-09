@@ -181,14 +181,14 @@ export default class ReadingPositionIndicator {
       this.progressBarPercentageEl.textContent = 'no rpi needed';
     } else {
       if (scrollPosition < this.rpiArea.top) {
-        this.progressBarPercentageEl.textContent = 'before rpi';
+        this.progressBarPercentageEl.textContent = 'before position indicator';
         this.progressBarEl.style[this._transformName] = `scaleX(0)`;
       } else if (
         scrollPosition >
         this.rpiArea.bottom - this.scroll.viewHeight
       ) {
-        this.progressBarPercentageEl.textContent = 'after rpi';
-        this.progressBarEl.style[this._transformName] = `scaleX(0)`;
+        this.progressBarPercentageEl.textContent = 'after position indicator';
+        this.progressBarEl.style[this._transformName] = `scaleX(1)`;
       } else {
         let offset = scrollPosition - this.rpiArea.top;
 
