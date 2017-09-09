@@ -9,9 +9,9 @@ function getTransformVendorPrefixAsString() {
   // http://shouldiprefix.com/#transforms
   const el = document.createElement('div');
   const names = {
-    transform: 'transform',  // Modern
+    transform: 'transform', // Modern
     WebkitTransition: 'webkitTransform', // iOS7+
-    MsTransform: 'msTransform', // IE9+
+    MsTransform: 'msTransform' // IE9+
   };
 
   /* eslint-disable */
@@ -36,57 +36,64 @@ function getDocumentHeight() {
     document.body.scrollHeight,
     document.documentElement.scrollHeight,
     document.body.offsetHeight,
-    document.documentElement.offsetHeight,
+    document.documentElement.offsetHeight
   );
 }
 
 // Cross-browser
 function getViewHeight() {
-  return Math.max(
-    window.innerHeight,
-    0);
+  return Math.max(window.innerHeight, 0);
 }
 
 // https://john-dugan.com/javascript-debounce/
 function debounce(e, t, n) {
   /* eslint-disable */
   var a;
-  return function () {
+  return function() {
     var r = this,
       i = arguments,
-      o = function () {
-        a = null, n || e.apply(r, i)
+      o = function() {
+        (a = null), n || e.apply(r, i);
       },
       s = n && !a;
-    clearTimeout(a), a = setTimeout(o, t || 200), s && e.apply(r, i)
-  }
+    clearTimeout(a), (a = setTimeout(o, t || 200)), s && e.apply(r, i);
+  };
   /* eslint-enable */
 }
 
 export default class ReadingPositionIndicator {
-  constructor(props = {
-    color: null,
-    percentage: {
-      show: false,
-      displayBeforeScroll: false,
+  constructor(
+    props = {
       color: null,
-      opacity: null,
-    },
-  }) {
+      percentage: {
+        show: false,
+        displayBeforeScroll: false,
+        color: null,
+        opacity: null
+      },
+      rpiArea: null
+    }
+  ) {
     this.props = props;
     this.scroll = {
       maxHeight: 1,
       last_known_scroll_position: 0,
-      ticking: false,
+      ticking: false
     };
   }
 
   init() {
     this._transformName = getTransformVendorPrefixAsString();
 
-    this.progressBarContainerEl = document.getElementById('rpi-progress-bar-container');
-    this.progressBarEl = this.progressBarContainerEl.querySelector('.rpi-progress-bar-container__position');
-    this.progressBarPercentageEl = this.progressBarContainerEl.querySelector('.rpi-progress-bar-container__percentage');
+    this.progressBarContainerEl = document.getElementById(
+      'rpi-progress-bar-container'
+    );
+    this.progressBarEl = this.progressBarContainerEl.querySelector(
+      '.rpi-progress-bar-container__position'
+    );
+    this.progressBarPercentageEl = this.progressBarContainerEl.querySelector(
+      '.rpi-progress-bar-container__percentage'
+    );
 
     if (this.props.color) {
       this.progressBarEl.style.background = this.props.color;
@@ -106,6 +113,7 @@ export default class ReadingPositionIndicator {
     }, 200);
 
     this._update();
+
     if (this.props.percentage && this.props.percentage.displayBeforeScroll) {
       this._updateProgressBar(getScrollPosition());
     }
@@ -125,8 +133,31 @@ export default class ReadingPositionIndicator {
     return this;
   }
 
+  _updateRpiArea() {
+    if (this.props.rpiArea) {
+      let rect = this.props.rpiArea.getBoundingClientRect();
+      let scrollPosition = getScrollPosition();
+
+      this.rpiArea = {
+        top: rect.top + scrollPosition,
+        bottom: rect.bottom + scrollPosition,
+        height: rect.height,
+        rect: rect
+      };
+    } else {
+      let documentHeight = getDocumentHeight();
+      this.rpiArea = {
+        top: 0,
+        bottom: documentHeight,
+        height: documentHeight
+      };
+    }
+  }
+
   _update() {
-    this.scroll.documentHeight = getDocumentHeight();
+    this._updateRpiArea();
+
+    this.scroll.documentHeight = this.rpiArea.height;
     this.scroll.viewHeight = getViewHeight();
     this.scroll.maxHeight = this.scroll.documentHeight - this.scroll.viewHeight;
   }
@@ -144,16 +175,34 @@ export default class ReadingPositionIndicator {
   }
 
   _updateProgressBar(scrollPosition) {
-    const value = Math.min(scrollPosition || 0, this.scroll.maxHeight);
-    const percentage = Math.round((100 * value) / Math.max(this.scroll.maxHeight, 1));
-    this.progressBarContainerEl.setAttribute('aria-valuenow', percentage);
-    this.progressBarEl.style[this._transformName] = `scaleX(${percentage / 100})`;
+    scrollPosition = scrollPosition || 0;
 
-    if (this.props.percentage && this.props.percentage.show) {
-      if (this.scroll.viewHeight >= this.scroll.documentHeight) {
-        this.progressBarPercentageEl.textContent = '';
+    if (this.scroll.viewHeight >= this.rpiArea.height) {
+      this.progressBarPercentageEl.textContent = 'no rpi needed';
+    } else {
+      if (scrollPosition < this.rpiArea.top) {
+        this.progressBarPercentageEl.textContent = 'before rpi';
+        this.progressBarEl.style[this._transformName] = `scaleX(0)`;
+      } else if (
+        scrollPosition >
+        this.rpiArea.bottom - this.scroll.viewHeight
+      ) {
+        this.progressBarPercentageEl.textContent = 'after rpi';
+        this.progressBarEl.style[this._transformName] = `scaleX(0)`;
       } else {
-        this.progressBarPercentageEl.textContent = `${percentage}%`;
+        let offset = scrollPosition - this.rpiArea.top;
+
+        const percentage = Math.round(
+          100 * offset / Math.max(this.scroll.maxHeight, 1)
+        );
+
+        this.progressBarContainerEl.setAttribute('aria-valuenow', percentage);
+        this.progressBarEl.style[this._transformName] = `scaleX(${percentage /
+          100})`;
+
+        if (this.props.percentage && this.props.percentage.show) {
+          this.progressBarPercentageEl.textContent = `${percentage}%`;
+        }
       }
     }
   }
