@@ -31,7 +31,7 @@ https://www.npmjs.com/package/reading-position-indicator
 
 
 # size
-* js `~5kb`
+* js `~6kb`
 * css `<1kb`
 
 # test
@@ -55,13 +55,13 @@ Check the **dist/index.html** for inspiration.
 </head>
 <body>
   <!-- library markup -->
-  <div id="rpi-progress-bar-container" 
+  <div id="rpi-progress-bar" class="rpi-progress-bar" 
     role="progressbar" 
     aria-valuemin="0" 
     aria-valuemax="100"
     aria-valuenow="0">
-      <div class="rpi-progress-bar-container__position" aria-hidden="true"></div>
-      <div class="rpi-progress-bar-container__percentage"></div>
+      <div class="rpi-progress-bar__position" aria-hidden="true"></div>
+      <div class="rpi-progress-bar__percentage"></div>
   </div>
   <!-- end library markup -->
   
@@ -75,24 +75,33 @@ Check the **dist/index.html** for inspiration.
 ### minimum markup required
 
 ```html
-<div id="rpi-progress-bar-container">
-      <div class="rpi-progress-bar-container__position"></div>
-      <div class="rpi-progress-bar-container__percentage"></div>
+<div id="rpi-progress-bar" class="rpi-progress-bar">
+      <div class="rpi-progress-bar__position"></div>
+      <div class="rpi-progress-bar__percentage"></div>
 </div>
 ```
 
 ### configuration example
 
 ```javascript
-var rpi = new ReadingPositionIndicator({
-          color: 'royalblue', // progress bar color
-          percentage: {
-            show: true,
-            opacity: .3,
-            color: '#000',
-          },
-        }).init();
-//rpi.destroy(); // use when to be removed
+var rpi;
+setTimeout(function waitUntilDomIsReady() {
+  rpi = new ReadingPositionIndicator({
+    rpiArea: '[data-rpi-area]', /* optional, query selector to an element */
+    progressBar: { /* optional */
+      show: true, /* default true */
+      color: 'rgba(0, 120, 120, .5)', /* default from css */
+    },
+    percentage: { /* optional */
+      show: true, /* default false */
+      displayBeforeScroll: false, /* default false */
+      opacity: .3, /* default from css */
+      color: '#000', /* default from css */
+    },
+  }).init();
+}, 200); // wait until DOM has fully rendered the article to get the calculations correct
+// rpi.destroy(); // use when to be removed
+// rpi.update(); // optional force update, usage example: if you have updated the DOM and need to refresh the indicator
 ```
 
 
@@ -104,7 +113,7 @@ var rpi = new ReadingPositionIndicator({
 
 # how does it work?
 
-It uses JS to calculate the document height and the viewport height to calculate the current position. The calculation is updated on scroll and resize event and the information is updated to the markup.
+It calculate heights for viewport, document and current scroll position. If rpiArea is used then it also uses getBoundingClientRect method to calculate dom element dimension. DOM updates are only applied if data has changed since last time. The calculation is updated on scroll and resize event and the information is updated to the DOM.
 
 
 # license
