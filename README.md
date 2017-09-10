@@ -81,7 +81,7 @@ Check the **dist/index.html** for inspiration.
 </div>
 ```
 
-### configuration example
+### configuration and usage example
 
 ```javascript
 var rpi;
