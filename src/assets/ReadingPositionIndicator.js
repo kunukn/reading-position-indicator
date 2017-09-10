@@ -75,57 +75,65 @@ export default class ReadingPositionIndicator {
     }
   ) {
     this.props = props;
-    this.scroll = {
-      maxHeight: 1,
-      last_known_scroll_position: 0,
-      ticking: false
-    };
+    this.elems = {}; // dom elements
     this.state = {
+      scroll: {
+        maxHeight: 1,
+        last_known_scroll_position: 0,
+        ticking: false,
+      },
+      rpiArea:{},
       virtualDOM: {
         progressBarPercentageTextContent: undefined,
         progressBarStyleTransform: undefined,
-        progressBarContainerPercentage: undefined
+        progressBarContainerPercentage: undefined,
       },
-      DOM: {}
+      DOM: {},
     };
   }
 
   init() {
     this._transformName = getTransformVendorPrefixAsString();
 
-    this.progressBarContainerEl = document.getElementById(
+    // Get elements
+    let progressBarContainer = document.getElementById(
       'rpi-progress-bar-container'
     );
-    this.progressBarEl = this.progressBarContainerEl.querySelector(
+    this.elems.progressBarContainer = progressBarContainer;
+    this.elems.progressBar = progressBarContainer.querySelector(
       '.rpi-progress-bar-container__position'
     );
-    this.progressBarPercentageEl = this.progressBarContainerEl.querySelector(
+    this.elems.progressBarPercentage = progressBarContainer.querySelector(
       '.rpi-progress-bar-container__percentage'
     );
 
+    // Apply configuration
     if (this.props.color) {
-      this.progressBarEl.style.background = this.props.color;
+      this.elems.progressBar.style.background = this.props.color;
     }
     if (this.props.percentage) {
       if (this.props.percentage.color) {
-        this.progressBarPercentageEl.style.color = this.props.percentage.color;
+        this.elems.progressBarPercentage.style.color = this.props.percentage.color;
       }
       if (this.props.percentage.opacity) {
-        this.progressBarPercentageEl.style.opacity = this.props.percentage.opacity;
+        this.elems.progressBarPercentage.style.opacity = this.props.percentage.opacity;
       }
     }
 
+    // Update state
     this._update();
 
     if (this.props.percentage && this.props.percentage.displayBeforeScroll) {
       this._updateProgressBar(getScrollPosition());
     }
 
+    // Apply event listeners
     this._onResize = debounce(() => {
       this._update();
       this._updateProgressBar(getScrollPosition());
     }, 200);
 
+    // ES6 rebind
     this._onScroll = this._onScroll.bind(this);
     this._onResize = this._onResize.bind(this);
 
@@ -146,40 +154,38 @@ export default class ReadingPositionIndicator {
       let rect = this.props.rpiArea.getBoundingClientRect();
       let scrollPosition = getScrollPosition();
 
-      this.rpiArea = {
+      this.state.rpiArea = {
         top: rect.top + scrollPosition,
         bottom: rect.bottom + scrollPosition,
         height: rect.height,
-        rect: rect
       };
     } else {
       let documentHeight = getDocumentHeight();
-      this.rpiArea = {
-        top: 0,
+      this.state.rpiArea = {
+        top: 0, //  + scrollPosition ??, test and verify
         bottom: documentHeight,
         height: documentHeight
       };
     }
   }
-
+  
+  // Called on init and resize events
   _update() {
     this._updateRpiArea();
-
-    this.scroll.documentHeight = this.rpiArea.height;
-    this.scroll.viewHeight = getViewHeight();
-    this.scroll.maxHeight = this.scroll.documentHeight - this.scroll.viewHeight;
+    this.state.scroll.viewHeight = getViewHeight();
+    this.state.scroll.maxHeight = this.state.rpiArea.height - this.state.scroll.viewHeight;
   }
 
   _onScroll() {
     // https://developer.mozilla.org/en-US/docs/Web/Events/scroll
-    this.scroll.last_known_scroll_position = getScrollPosition();
-    if (!this.scroll.ticking) {
+    this.state.scroll.last_known_scroll_position = getScrollPosition();
+    if (!this.state.scroll.ticking) {
       window.requestAnimationFrame(() => {
-        this._updateProgressBar(this.scroll.last_known_scroll_position);
-        this.scroll.ticking = false;
+        this._updateProgressBar(this.state.scroll.last_known_scroll_position);
+        this.state.scroll.ticking = false;
       });
     }
-    this.scroll.ticking = true;
+    this.state.scroll.ticking = true;
   }
 
   _updateProgressBar(scrollPosition) {
@@ -188,21 +194,21 @@ export default class ReadingPositionIndicator {
   }
 
   _updateVirtualDOM(scrollPosition) {
-    let { viewHeight, maxHeight } = this.scroll;
+    let { viewHeight, maxHeight } = this.state.scroll;
 
-    if (viewHeight >= this.rpiArea.height) {
+    if (viewHeight >= this.state.rpiArea.height) {
       this.state.virtualDOM.progressBarPercentageTextContent = 'no rpi needed';
     } else {
-      if (scrollPosition < this.rpiArea.top) {
+      if (scrollPosition < this.state.rpiArea.top) {
         this.state.virtualDOM.progressBarPercentageTextContent =
           'before position indicator';
         this.state.virtualDOM.progressBarStyleTransform = 'scaleX(0)';
-      } else if (scrollPosition > this.rpiArea.bottom - viewHeight) {
+      } else if (scrollPosition > this.state.rpiArea.bottom - viewHeight) {
         this.state.virtualDOM.progressBarPercentageTextContent =
           'after position indicator';
         this.state.virtualDOM.progressBarStyleTransform = 'scaleX(1)';
       } else {
-        let offset = scrollPosition - this.rpiArea.top;
+        let offset = scrollPosition - this.state.rpiArea.top;
 
         const percentage = Math.round(100 * offset / Math.max(maxHeight, 1));
 
@@ -230,7 +236,7 @@ export default class ReadingPositionIndicator {
       // update dom state
       this.state.DOM.progressBarPercentageTextContent = progressBarPercentageTextContent;
       // update dom
-      this.progressBarPercentageEl.textContent = progressBarPercentageTextContent;
+      this.elems.progressBarPercentage.textContent = progressBarPercentageTextContent;
     }
 
     if (
@@ -239,7 +245,7 @@ export default class ReadingPositionIndicator {
       // update dom state
       this.state.DOM.progressBarStyleTransform = progressBarStyleTransform;
       // update dom
-      this.progressBarEl.style[this._transformName] = progressBarStyleTransform;
+      this.elems.progressBar.style[this._transformName] = progressBarStyleTransform;
     }
 
     if (
@@ -249,7 +255,7 @@ export default class ReadingPositionIndicator {
       // update dom state
       this.state.DOM.progressBarContainerPercentage = progressBarContainerPercentage;
       // update dom
-      this.progressBarContainerEl.setAttribute(
+      this.elems.progressBarContainer.setAttribute(
         'aria-valuenow',
         progressBarContainerPercentage
       );
