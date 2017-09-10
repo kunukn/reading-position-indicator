@@ -148,21 +148,21 @@
     var rpi;
     setTimeout(function waitUntilDomIsReady() {
       rpi = new ReadingPositionIndicator({
-        rpiArea: '[data-rpi-area]', // optional
-        progressBar: { // optional
-          show: true,
-          color: 'rgba(0, 120, 120, .5)',
+        rpiArea: '[data-rpi-area]', /* optional, query selector to an element */
+        progressBar: { /* optional */
+          show: true, /* default true */
+          color: 'rgba(0, 120, 120, .5)', /* default from css */
         },
-        percentage: { // optional
-          show: true,
-          displayBeforeScroll: false,
-          opacity: .3,
-          color: '#000',
+        percentage: { /* optional */
+          show: true, /* default false */
+          displayBeforeScroll: false, /* default false */
+          opacity: .3, /* default from css */
+          color: '#000', /* default from css */
         },
       }).init();
-    }, 200); // wait until DOM has fully rendered the article
+    }, 200); // wait until DOM has fully rendered the article to get the calculations correct
 // rpi.destroy(); // use when to be removed
-// rpi.update(); // optional - manual update calculations and display
+// rpi.update(); // optional force update, usage example: if you have updated the DOM and need to refresh the indicator
   </script>
 </body>
 
