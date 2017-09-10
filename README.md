@@ -110,6 +110,8 @@ setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
 * npm install
 * npm start
 
+# build library into dist folder
+* npm run build 
 
 # how does it work?
 
