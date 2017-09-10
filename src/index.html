@@ -15,14 +15,14 @@
     }
 
     body {
-      font-display: swap;
+      /*font-display: swap;*/
       font-family: 'Montserrat', sans-serif;
       position: relative;
     }
 
     [data-rpi-area] {
       background: rgba(0, 120, 120, .1);
-      padding: 1em;
+      padding: 1em 2em;
     }
 
     article {
@@ -31,21 +31,9 @@
       display: block;
       -webkit-transition: 200ms;
       transition: 200ms;
-      max-width: 96%;
+      max-width: 700px;
       margin: 0 auto;
       padding: 0 2em;
-    }
-
-    @media (min-width: 900px) {
-      article {
-        max-width: 70%;
-      }
-    }
-
-    @media (min-width: 1600px) {
-      article {
-        max-width: 60%;
-      }
     }
 
     article p {
@@ -58,7 +46,7 @@
 <body>
 
   <!-- library -->
-  <div id="rpi-progress-bar" class="rpi-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="rpi-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
     <div class="rpi-progress-bar__position" aria-hidden="true"></div>
     <div class="rpi-progress-bar__percentage"></div>
   </div>
@@ -72,15 +60,10 @@
       divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.
       His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's
       happened to me?" he thought. </p>
-    <p>It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar
-      walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it
-      there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It
-      showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole
-      of her lower arm towards the viewer.</p>
 
     <div data-rpi-area>
       <h2>Starts here</h2>
-      <p >One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.
+      <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.
         He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and
         divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any
         moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
@@ -127,40 +110,25 @@
       divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.
       His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's
       happened to me?" he thought. </p>
-    <p>It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar
-      walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it
-      there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It
-      showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole
-      of her lower arm towards the viewer.</p>
-    <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.
-      He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and
-      divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.
-      His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. "What's
-      happened to me?" he thought. </p>
-    <p>It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar
-      walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it
-      there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It
-      showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole
-      of her lower arm towards the viewer.</p>
   </article>
 
   <script>
-    var rpi;
-    setTimeout(function waitUntilDomIsReady() {
-      rpi = new ReadingPositionIndicator({
-        rpiArea: '[data-rpi-area]', /* optional, query selector to an element */
-        progressBar: { /* optional */
-          show: true, /* default true */
-          color: 'rgba(0, 120, 120, .5)', /* default from css */
-        },
-        percentage: { /* optional */
-          show: true, /* default false */
-          displayBeforeScroll: false, /* default false */
-          opacity: .3, /* default from css */
-          color: '#000', /* default from css */
-        },
-      }).init();
-    }, 200); // wait until DOM has fully rendered the article to get the calculations correct
+var rpi;
+setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
+  rpi = new ReadingPositionIndicator({
+    rpiArea: '[data-rpi-area]', /* optional, query selector to an element */
+    progressBar: { /* optional */
+      show: true, /* default true */
+      color: 'rgba(0, 120, 120, .5)', /* default from css */
+    },
+    percentage: { /* optional */
+      show: true, /* default false */
+      displayBeforeScroll: false, /* default false */
+      opacity: .3, /* default from css */
+      color: '#000', /* default from css */
+    },
+  }).init();
+}, 200); // wait until DOM has fully rendered the article to get the calculations correct
 // rpi.destroy(); // use when to be removed
 // rpi.update(); // optional force update, usage example: if you have updated the DOM and need to refresh the indicator
   </script>

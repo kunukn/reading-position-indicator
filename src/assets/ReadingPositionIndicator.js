@@ -181,7 +181,7 @@ export default class ReadingPositionIndicator {
 }
 
 function applyElements() {
-  let progressBar = document.getElementById('rpi-progress-bar');
+  const progressBar = document.querySelector('.rpi-progress-bar');
   this.elems.progressBar = progressBar;
   this.elems.progressBarPosition = progressBar.querySelector(
     '.rpi-progress-bar__position'
