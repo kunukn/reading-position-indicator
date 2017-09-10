@@ -41,7 +41,7 @@
       margin-bottom: 2em;
     }
   </style>
-<link href="rpi.bundle.css?02b7ebc120f615d0ad69" rel="stylesheet"><script type="text/javascript" src="rpi.bundle.js?02b7ebc120f615d0ad69"></script></head>
+<link href="rpi.bundle.css?92572cabaf0fe5004c87" rel="stylesheet"><script type="text/javascript" src="rpi.bundle.js?92572cabaf0fe5004c87"></script></head>
 
 <body>
 
@@ -128,7 +128,10 @@ setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
       color: '#000', /* default from css */
     },
   }).init();
-}, 200); // wait until DOM has fully rendered the article to get the calculations correct
+}, 500); 
+/* Wait until DOM has fully rendered the rpiArea to get the calculations correct. 
+If rpiArea is not used, then this should not be important. */
+
 // rpi.destroy(); // use when to be removed
 // rpi.update(); // optional force update, usage example: if you have updated the DOM and need to refresh the indicator
   </script>
