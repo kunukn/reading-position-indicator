@@ -10,7 +10,8 @@ export default class ReadingPositionIndicator {
     const defaultProps = {
       progressBar: {
         show: true,
-        color: null
+        color: null,
+        opacity: null,
       },
       percentage: {
         show: false,
@@ -38,7 +39,7 @@ export default class ReadingPositionIndicator {
   init() {
     this._transformName = getTransformVendorPrefixAsString();
 
-    getElements.call(this);
+    applyElements.call(this);
 
     this._updateCalculationInformationAndSaveToState();
 
@@ -75,7 +76,6 @@ export default class ReadingPositionIndicator {
     }
   }
 
-  // Called on init and resize events
   _updateCalculationInformationAndSaveToState() {
     this._updateRpiArea();
     this.state.scroll.viewHeight = getViewHeight();
@@ -106,8 +106,8 @@ export default class ReadingPositionIndicator {
     let { viewHeight, maxHeight } = this.state.scroll;
 
     if (viewHeight >= this.state.rpiArea.height) {
-      // no position indicator needed
-      this.state.virtualDOM.progressBarPercentageTextContent = 'no need';
+      // no position indicator needed, we can see it all in view size
+      this.state.virtualDOM.progressBarPercentageTextContent = '';
     } else {
       if (scrollPosition < this.state.rpiArea.top) {
         // before position indicator
@@ -131,6 +131,12 @@ export default class ReadingPositionIndicator {
         }
       }
     }
+  }
+
+  update(){
+    this._updateCalculationInformationAndSaveToState();
+    this._updateProgressBar(getScrollPosition());
+    return this;
   }
 
   _updateDOM() {
@@ -174,7 +180,7 @@ export default class ReadingPositionIndicator {
   }
 }
 
-function getElements() {
+function applyElements() {
   let progressBar = document.getElementById('rpi-progress-bar');
   this.elems.progressBar = progressBar;
   this.elems.progressBarPosition = progressBar.querySelector(
@@ -214,8 +220,7 @@ function applyConfiguration() {
 
 function applyEventListeners() {
   this._onResize = debounce(() => {
-    this._updateCalculationInformationAndSaveToState();
-    this._updateProgressBar(getScrollPosition());
+    this.update();
   }, 200);
 
   // ES6 rebind

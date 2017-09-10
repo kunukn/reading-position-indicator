@@ -13,14 +13,15 @@
     html {
       font-size: 16px;
     }
+
     body {
       font-display: swap;
       font-family: 'Montserrat', sans-serif;
       position: relative;
     }
 
-    [data-rpi-area]{
-      background: rgba(0,120,120,.1);
+    [data-rpi-area] {
+      background: rgba(0, 120, 120, .1);
       padding: 1em;
     }
 
@@ -52,7 +53,7 @@
       margin-bottom: 2em;
     }
   </style>
-<link href="rpi.bundle.css?66ce6fd76685df0a759f" rel="stylesheet"><script type="text/javascript" src="rpi.bundle.js?66ce6fd76685df0a759f"></script></head>
+<link href="rpi.bundle.css?5962b2433171335e15dc" rel="stylesheet"><script type="text/javascript" src="rpi.bundle.js?5962b2433171335e15dc"></script></head>
 
 <body>
 
@@ -79,7 +80,7 @@
 
     <div data-rpi-area>
       <h2>Starts here</h2>
-      <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.
+      <p >One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.
         He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and
         divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any
         moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.
@@ -144,20 +145,24 @@
   </article>
 
   <script>
-    var rpi = new ReadingPositionIndicator({
-      rpiArea: '[data-rpi-area]',
-      progressBar:{
-        show: true,
-        color: 'rgba(0,128,255,.5)',
-      },
-      percentage: {
-        show: true,
-        displayBeforeScroll: false,
-        opacity: .3,
-        color: '#000',
-      },
-    }).init();
+    var rpi;
+    setTimeout(function waitUntilDomIsReady() {
+      rpi = new ReadingPositionIndicator({
+        rpiArea: '[data-rpi-area]', // optional
+        progressBar: { // optional
+          show: true,
+          color: 'rgba(0, 120, 120, .5)',
+        },
+        percentage: { // optional
+          show: true,
+          displayBeforeScroll: false,
+          opacity: .3,
+          color: '#000',
+        },
+      }).init();
+    }, 200); // wait until DOM has fully rendered the article
 // rpi.destroy(); // use when to be removed
+// rpi.update(); // optional - manual update calculations and display
   </script>
 </body>
 
