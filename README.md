@@ -3,7 +3,7 @@ Small mobile friendly reading position indicator library with no dependencies.
 
 # demo
 * https://codepen.io/kunukn/pen/ayeMZN/ (version 2.0.0+)
-* http://codepen.io/kunukn/full/zNJqEE (version 1.0.3+)
+* https://codepen.io/kunukn/full/zNJqEE (version 1.0.3+)
 
 <img src="https://github.com/kunukn/reading-position-indicator/blob/master/media/rpi.gif?raw=true" width="300">
 
