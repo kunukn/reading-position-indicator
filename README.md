@@ -101,7 +101,7 @@ setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
   }).init();
 }, 200); // wait until DOM has fully rendered the article to get the calculations correct
 // rpi.destroy(); // use when to be removed
-// rpi.update(); // optional force update, usage example: DOM was updated and need to refresh the indicator
+// rpi.update(); // optional force update, example: DOM was updated and need to refresh the indicator
 ```
 
 
