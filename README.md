@@ -55,7 +55,7 @@ Check the **dist/index.html** for inspiration.
 </head>
 <body>
   <!-- library markup -->
-  <div id="rpi-progress-bar" class="rpi-progress-bar" 
+  <div class="rpi-progress-bar" 
     role="progressbar" 
     aria-valuemin="0" 
     aria-valuemax="100"
@@ -75,7 +75,7 @@ Check the **dist/index.html** for inspiration.
 ### minimum markup required
 
 ```html
-<div id="rpi-progress-bar" class="rpi-progress-bar">
+<div class="rpi-progress-bar">
       <div class="rpi-progress-bar__position"></div>
       <div class="rpi-progress-bar__percentage"></div>
 </div>
@@ -85,7 +85,7 @@ Check the **dist/index.html** for inspiration.
 
 ```javascript
 var rpi;
-setTimeout(function waitUntilDomIsReady() {
+setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
   rpi = new ReadingPositionIndicator({
     rpiArea: '[data-rpi-area]', /* optional, query selector to an element */
     progressBar: { /* optional */
