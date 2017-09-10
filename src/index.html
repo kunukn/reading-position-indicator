@@ -10,7 +10,11 @@
   <!-- demo -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <style>
+    html {
+      font-size: 16px;
+    }
     body {
+      font-display: swap;
       font-family: 'Montserrat', sans-serif;
       position: relative;
     }
@@ -53,9 +57,9 @@
 <body>
 
   <!-- library -->
-  <div id="rpi-progress-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <div class="rpi-progress-bar-container__position" aria-hidden="true"></div>
-    <div class="rpi-progress-bar-container__percentage"></div>
+  <div id="rpi-progress-bar" class="rpi-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="rpi-progress-bar__position" aria-hidden="true"></div>
+    <div class="rpi-progress-bar__percentage"></div>
   </div>
 
   <!-- page demo -->
@@ -141,14 +145,17 @@
 
   <script>
     var rpi = new ReadingPositionIndicator({
-      color: 'rgba(0,128,255,.5)',
+      rpiArea: '[data-rpi-area]',
+      progressBar:{
+        show: true,
+        color: 'rgba(0,128,255,.5)',
+      },
       percentage: {
         show: true,
         displayBeforeScroll: false,
         opacity: .3,
         color: '#000',
       },
-      rpiArea: document.querySelector('[data-rpi-area]'),
     }).init();
 // rpi.destroy(); // use when to be removed
   </script>

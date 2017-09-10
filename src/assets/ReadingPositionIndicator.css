@@ -1,4 +1,4 @@
-[id="rpi-progress-bar-container"] {
+.rpi-progress-bar {
   box-sizing: border-box;
   position: fixed;
   width: 100%;
@@ -6,7 +6,7 @@
   left: 0;
   padding-bottom: 20px;
 }
-.rpi-progress-bar-container__percentage {
+.rpi-progress-bar__percentage {
   box-sizing: inherit;
   font-size: 16px;
   position: absolute;
@@ -19,11 +19,10 @@
   min-width: 4em;
   padding-left: 4px;
 }
-.rpi-progress-bar-container__position {
+.rpi-progress-bar__position {
   box-sizing: inherit;
   height: 4px;
   width: 100%;  
-  background-color: #1E90FF;
   background-color: rgba(0,0,0,.2);
   -webkit-transform-origin: 0 50%;
           transform-origin: 0 50%;
