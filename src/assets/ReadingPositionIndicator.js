@@ -80,6 +80,14 @@ export default class ReadingPositionIndicator {
       last_known_scroll_position: 0,
       ticking: false
     };
+    this.state = {
+      virtualDOM: {
+        progressBarPercentageTextContent: undefined,
+        progressBarStyleTransform: undefined,
+        progressBarContainerPercentage: undefined
+      },
+      DOM: {}
+    };
   }
 
   init() {
@@ -107,16 +115,16 @@ export default class ReadingPositionIndicator {
       }
     }
 
-    this._onResize = debounce(() => {
-      this._update();
-      this._updateProgressBar(getScrollPosition());
-    }, 200);
-
     this._update();
 
     if (this.props.percentage && this.props.percentage.displayBeforeScroll) {
       this._updateProgressBar(getScrollPosition());
     }
+
+    this._onResize = debounce(() => {
+      this._update();
+      this._updateProgressBar(getScrollPosition());
+    }, 200);
 
     this._onScroll = this._onScroll.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -175,35 +183,76 @@ export default class ReadingPositionIndicator {
   }
 
   _updateProgressBar(scrollPosition) {
-    scrollPosition = scrollPosition || 0;
+    this._updateVirtualDOM(scrollPosition || 0);
+    this._updateDOM();
+  }
 
-    if (this.scroll.viewHeight >= this.rpiArea.height) {
-      this.progressBarPercentageEl.textContent = 'no rpi needed';
+  _updateVirtualDOM(scrollPosition) {
+    let { viewHeight, maxHeight } = this.scroll;
+
+    if (viewHeight >= this.rpiArea.height) {
+      this.state.virtualDOM.progressBarPercentageTextContent = 'no rpi needed';
     } else {
       if (scrollPosition < this.rpiArea.top) {
-        this.progressBarPercentageEl.textContent = 'before position indicator';
-        this.progressBarEl.style[this._transformName] = `scaleX(0)`;
-      } else if (
-        scrollPosition >
-        this.rpiArea.bottom - this.scroll.viewHeight
-      ) {
-        this.progressBarPercentageEl.textContent = 'after position indicator';
-        this.progressBarEl.style[this._transformName] = `scaleX(1)`;
+        this.state.virtualDOM.progressBarPercentageTextContent =
+          'before position indicator';
+        this.state.virtualDOM.progressBarStyleTransform = 'scaleX(0)';
+      } else if (scrollPosition > this.rpiArea.bottom - viewHeight) {
+        this.state.virtualDOM.progressBarPercentageTextContent =
+          'after position indicator';
+        this.state.virtualDOM.progressBarStyleTransform = 'scaleX(1)';
       } else {
         let offset = scrollPosition - this.rpiArea.top;
 
-        const percentage = Math.round(
-          100 * offset / Math.max(this.scroll.maxHeight, 1)
-        );
+        const percentage = Math.round(100 * offset / Math.max(maxHeight, 1));
 
-        this.progressBarContainerEl.setAttribute('aria-valuenow', percentage);
-        this.progressBarEl.style[this._transformName] = `scaleX(${percentage /
+        this.state.virtualDOM.progressBarStyleTransform = `scaleX(${percentage /
           100})`;
 
         if (this.props.percentage && this.props.percentage.show) {
-          this.progressBarPercentageEl.textContent = `${percentage}%`;
+          this.state.virtualDOM.progressBarPercentageTextContent = `${percentage}%`;
         }
       }
+    }
+  }
+
+  _updateDOM() {
+    let {
+      progressBarPercentageTextContent,
+      progressBarStyleTransform,
+      progressBarContainerPercentage
+    } = this.state.virtualDOM;
+
+    if (
+      progressBarPercentageTextContent !==
+      this.state.DOM.progressBarPercentageTextContent
+    ) {
+      // update dom state
+      this.state.DOM.progressBarPercentageTextContent = progressBarPercentageTextContent;
+      // update dom
+      this.progressBarPercentageEl.textContent = progressBarPercentageTextContent;
+    }
+
+    if (
+      progressBarStyleTransform !== this.state.DOM.progressBarStyleTransform
+    ) {
+      // update dom state
+      this.state.DOM.progressBarStyleTransform = progressBarStyleTransform;
+      // update dom
+      this.progressBarEl.style[this._transformName] = progressBarStyleTransform;
+    }
+
+    if (
+      progressBarContainerPercentage !==
+      this.state.DOM.progressBarContainerPercentage
+    ) {
+      // update dom state
+      this.state.DOM.progressBarContainerPercentage = progressBarContainerPercentage;
+      // update dom
+      this.progressBarContainerEl.setAttribute(
+        'aria-valuenow',
+        progressBarContainerPercentage
+      );
     }
   }
 }

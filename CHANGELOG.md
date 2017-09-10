@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.0.4
+
+* Add ability to define the reading position indicator area
+
 ### 1.0.3
 
 * CSS refactoring, simplify and remove a class
