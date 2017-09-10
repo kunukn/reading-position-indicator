@@ -1,8 +1,9 @@
 ## Changelog
 
-### 1.0.4
+### 2.0.0
 
 * Add ability to define the reading position indicator area
+* Breaking change, configuration options has changed
 
 ### 1.0.3
 
