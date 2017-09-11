@@ -1,5 +1,15 @@
 // apply library styling
 import './ReadingPositionIndicator.css';
+import {
+  applyElements,
+  applyConfiguration,
+  applyEventListeners,
+  getTransformVendorPrefixAsString,
+  getScrollPosition,
+  getDocumentHeight,
+  getViewHeight,
+  debounce,
+} from './helpers.js';
 
 /* --------------------------------------------------------------
   ReadingPositionIndicator library
@@ -17,9 +27,9 @@ export default class ReadingPositionIndicator {
         show: false,
         displayBeforeScroll: false,
         color: null,
-        opacity: null
+        opacity: null,
       },
-      rpiArea: null
+      rpiArea: null,
     };
 
     this.props = { ...defaultProps, ...props };
@@ -28,11 +38,11 @@ export default class ReadingPositionIndicator {
       scroll: {
         maxHeight: 1,
         last_known_scroll_position: 0,
-        ticking: false
+        ticking: false,
       },
       rpiArea: {},
       virtualDOM: {},
-      DOM: {}
+      DOM: {},
     };
   }
 
@@ -64,14 +74,14 @@ export default class ReadingPositionIndicator {
       this.state.rpiArea = {
         top: rect.top + scrollPosition,
         bottom: rect.bottom + scrollPosition,
-        height: rect.height
+        height: rect.height,
       };
     } else {
       let documentHeight = getDocumentHeight();
       this.state.rpiArea = {
         top: 0,
         bottom: documentHeight,
-        height: documentHeight
+        height: documentHeight,
       };
     }
   }
@@ -103,7 +113,7 @@ export default class ReadingPositionIndicator {
   }
 
   _updateVirtualDOM(scrollPosition) {
-    let { viewHeight, maxHeight } = this.state.scroll;
+    const { viewHeight, maxHeight } = this.state.scroll;
 
     if (viewHeight >= this.state.rpiArea.height) {
       // no position indicator needed, we can see it all in view size
@@ -112,13 +122,15 @@ export default class ReadingPositionIndicator {
       if (scrollPosition < this.state.rpiArea.top) {
         // before position indicator
         this.state.virtualDOM.progressBarPercentageTextContent = '';
+        this.state.virtualDOM.progressBarPercentage = '0';
         this.state.virtualDOM.progressBarPositionStyleTransform = 'scaleX(0)';
       } else if (scrollPosition > this.state.rpiArea.bottom - viewHeight) {
         // after position indicator
         this.state.virtualDOM.progressBarPercentageTextContent = '';
+        this.state.virtualDOM.progressBarPercentage = '100';
         this.state.virtualDOM.progressBarPositionStyleTransform = 'scaleX(0)';
       } else {
-        let offset = scrollPosition - this.state.rpiArea.top;
+        const offset = scrollPosition - this.state.rpiArea.top;
         const percentage = Math.round(100 * offset / Math.max(maxHeight, 1));
 
         if (this.props.progressBar.show) {
@@ -129,21 +141,23 @@ export default class ReadingPositionIndicator {
         if (this.props.percentage.show) {
           this.state.virtualDOM.progressBarPercentageTextContent = `${percentage}%`;
         }
+
+        this.state.virtualDOM.progressBarPercentage = `${percentage}`;
       }
     }
   }
 
-  update(){
+  update() {
     this._updateCalculationInformationAndSaveToState();
     this._updateProgressBar(getScrollPosition());
     return this;
   }
 
   _updateDOM() {
-    let {
+    const {
       progressBarPercentageTextContent,
       progressBarPositionStyleTransform,
-      progressBarPercentage
+      progressBarPercentage,
     } = this.state.virtualDOM;
 
     if (
@@ -178,111 +192,4 @@ export default class ReadingPositionIndicator {
       );
     }
   }
-}
-
-function applyElements() {
-  const progressBar = document.querySelector('.rpi-progress-bar');
-  this.elems.progressBar = progressBar;
-  this.elems.progressBarPosition = progressBar.querySelector(
-    '.rpi-progress-bar__position'
-  );
-  this.elems.progressBarPercentage = progressBar.querySelector(
-    '.rpi-progress-bar__percentage'
-  );
-
-  if (this.props.rpiArea) {
-    this.elems.rpiArea = document.querySelector(this.props.rpiArea);
-  }
-}
-
-function applyConfiguration() {
-  let { percentage, progressBar } = this.props;
-  if (progressBar) {
-    if (progressBar.color) {
-      this.elems.progressBarPosition.style.background = progressBar.color;
-    }
-    if (progressBar.opacity) {
-      this.elems.progressBarPosition.style.opacity = progressBar.opacity;
-    }
-  }
-  if (percentage) {
-    if (percentage.color) {
-      this.elems.progressBarPercentage.style.color = percentage.color;
-    }
-    if (percentage.opacity) {
-      this.elems.progressBarPercentage.style.opacity = percentage.opacity;
-    }
-    if (percentage.displayBeforeScroll) {
-      this._updateProgressBar(getScrollPosition());
-    }
-  }
-}
-
-function applyEventListeners() {
-  this._onResize = debounce(() => {
-    this.update();
-  }, 200);
-
-  // ES6 rebind
-  this._onScroll = this._onScroll.bind(this);
-  this._onResize = this._onResize.bind(this);
-
-  window.addEventListener('scroll', this._onScroll);
-  window.addEventListener('resize', this._onResize);
-}
-
-function getTransformVendorPrefixAsString() {
-  // http://shouldiprefix.com/#transforms
-  const el = document.createElement('div');
-  const names = {
-    transform: 'transform', // Modern
-    WebkitTransition: 'webkitTransform', // iOS7+
-    MsTransform: 'msTransform' // IE9+
-  };
-
-  /* eslint-disable */
-  for (var name in names) {
-    if (el.style[name] !== undefined) {
-      return names[name];
-    }
-  }
-  /* eslint-enable */
-  return 'transform';
-}
-
-// Cross-browser
-function getScrollPosition() {
-  return window.pageYOffset || document.documentElement.scrollTop || 0;
-}
-
-// Cross-browser http://stackoverflow.com/a/11077758/815507
-function getDocumentHeight() {
-  return Math.max(
-    document.documentElement.clientHeight,
-    document.body.scrollHeight,
-    document.documentElement.scrollHeight,
-    document.body.offsetHeight,
-    document.documentElement.offsetHeight
-  );
-}
-
-// Cross-browser
-function getViewHeight() {
-  return Math.max(window.innerHeight, 0);
-}
-
-// https://john-dugan.com/javascript-debounce/
-function debounce(e, t, n) {
-  /* eslint-disable */
-  var a;
-  return function() {
-    var r = this,
-      i = arguments,
-      o = function() {
-        (a = null), n || e.apply(r, i);
-      },
-      s = n && !a;
-    clearTimeout(a), (a = setTimeout(o, t || 200)), s && e.apply(r, i);
-  };
-  /* eslint-enable */
 }
