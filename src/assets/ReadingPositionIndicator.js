@@ -118,6 +118,7 @@ export default class ReadingPositionIndicator {
     if (viewHeight >= this.state.rpiArea.height) {
       // no position indicator needed, we can see it all in view size
       this.state.virtualDOM.progressBarPercentageTextContent = '';
+      this.state.virtualDOM.progressBarPercentage = '100';
     } else {
       if (scrollPosition < this.state.rpiArea.top) {
         // before position indicator
