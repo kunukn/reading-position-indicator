@@ -109,7 +109,7 @@ setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
 * git clone the project or download it
 * npm install
 * npm start
-* open a browser and go to localhost:3000
+* open a browser and go to localhost:3333
 
 # build library into dist folder
 * npm run build 
