@@ -1,11 +1,32 @@
+// https://john-dugan.com/javascript-debounce/
+export function debounce(e, t, n) {
+  /* eslint-disable */
+  var a;
+  return function() {
+    var r = this,
+      i = arguments,
+      o = function() {
+        (a = null), n || e.apply(r, i);
+      },
+      s = n && !a;
+    clearTimeout(a), (a = setTimeout(o, t || 200)), s && e.apply(r, i);
+  };
+  /* eslint-enable */
+}
+
+// Cross-browser
+export function getScrollPosition() {
+  return window.pageYOffset || document.documentElement.scrollTop || 0;
+}
+
 export function applyElements() {
   const progressBar = document.querySelector('.rpi-progress-bar');
   this.elems.progressBar = progressBar;
   this.elems.progressBarPosition = progressBar.querySelector(
-    '.rpi-progress-bar__position'
+    '.rpi-progress-bar__position',
   );
   this.elems.progressBarPercentage = progressBar.querySelector(
-    '.rpi-progress-bar__percentage'
+    '.rpi-progress-bar__percentage',
   );
 
   if (this.props.rpiArea) {
@@ -14,7 +35,7 @@ export function applyElements() {
 }
 
 export function applyConfiguration() {
-  let { percentage, progressBar } = this.props;
+  const { percentage, progressBar } = this.props;
   if (progressBar) {
     if (progressBar.color) {
       this.elems.progressBarPosition.style.background = progressBar.color;
@@ -68,11 +89,6 @@ export function getTransformVendorPrefixAsString() {
   return 'transform';
 }
 
-// Cross-browser
-export function getScrollPosition() {
-  return window.pageYOffset || document.documentElement.scrollTop || 0;
-}
-
 // Cross-browser http://stackoverflow.com/a/11077758/815507
 export function getDocumentHeight() {
   return Math.max(
@@ -80,27 +96,11 @@ export function getDocumentHeight() {
     document.body.scrollHeight,
     document.documentElement.scrollHeight,
     document.body.offsetHeight,
-    document.documentElement.offsetHeight
+    document.documentElement.offsetHeight,
   );
 }
 
 // Cross-browser
 export function getViewHeight() {
   return Math.max(window.innerHeight, 0);
-}
-
-// https://john-dugan.com/javascript-debounce/
-export function debounce(e, t, n) {
-  /* eslint-disable */
-  var a;
-  return function() {
-    var r = this,
-      i = arguments,
-      o = function() {
-        (a = null), n || e.apply(r, i);
-      },
-      s = n && !a;
-    clearTimeout(a), (a = setTimeout(o, t || 200)), s && e.apply(r, i);
-  };
-  /* eslint-enable */
 }

@@ -8,8 +8,7 @@ import {
   getScrollPosition,
   getDocumentHeight,
   getViewHeight,
-  debounce,
-} from './helpers.js';
+} from './helpers';
 
 /* --------------------------------------------------------------
   ReadingPositionIndicator library
@@ -33,7 +32,7 @@ export default class ReadingPositionIndicator {
     };
 
     this.props = { ...defaultProps, ...props };
-    this.elems = {}; // dom elements
+    this.elems = {}; // DOM elements
     this.state = {
       scroll: {
         maxHeight: 1,
@@ -68,8 +67,8 @@ export default class ReadingPositionIndicator {
 
   _updateRpiArea() {
     if (this.elems.rpiArea) {
-      let rect = this.elems.rpiArea.getBoundingClientRect();
-      let scrollPosition = getScrollPosition();
+      const rect = this.elems.rpiArea.getBoundingClientRect();
+      const scrollPosition = getScrollPosition();
 
       this.state.rpiArea = {
         top: rect.top + scrollPosition,
@@ -77,7 +76,7 @@ export default class ReadingPositionIndicator {
         height: rect.height,
       };
     } else {
-      let documentHeight = getDocumentHeight();
+      const documentHeight = getDocumentHeight();
       this.state.rpiArea = {
         top: 0,
         bottom: documentHeight,
@@ -99,7 +98,7 @@ export default class ReadingPositionIndicator {
     if (!this.state.scroll.ticking) {
       window.requestAnimationFrame(() => {
         this._updateProgressBar(
-          this.state.scroll.last_known_scroll_position || 0
+          this.state.scroll.last_known_scroll_position || 0,
         );
         this.state.scroll.ticking = false;
       });
@@ -119,32 +118,33 @@ export default class ReadingPositionIndicator {
       // no position indicator needed, we can see it all in view size
       this.state.virtualDOM.progressBarPercentageTextContent = '';
       this.state.virtualDOM.progressBarPercentage = '100';
+      return;
+    }
+
+    if (scrollPosition < this.state.rpiArea.top) {
+      // before position indicator
+      this.state.virtualDOM.progressBarPercentageTextContent = '';
+      this.state.virtualDOM.progressBarPercentage = '0';
+      this.state.virtualDOM.progressBarPositionStyleTransform = 'scaleX(0)';
+    } else if (scrollPosition > this.state.rpiArea.bottom - viewHeight) {
+      // after position indicator
+      this.state.virtualDOM.progressBarPercentageTextContent = '';
+      this.state.virtualDOM.progressBarPercentage = '100';
+      this.state.virtualDOM.progressBarPositionStyleTransform = 'scaleX(0)';
     } else {
-      if (scrollPosition < this.state.rpiArea.top) {
-        // before position indicator
-        this.state.virtualDOM.progressBarPercentageTextContent = '';
-        this.state.virtualDOM.progressBarPercentage = '0';
-        this.state.virtualDOM.progressBarPositionStyleTransform = 'scaleX(0)';
-      } else if (scrollPosition > this.state.rpiArea.bottom - viewHeight) {
-        // after position indicator
-        this.state.virtualDOM.progressBarPercentageTextContent = '';
-        this.state.virtualDOM.progressBarPercentage = '100';
-        this.state.virtualDOM.progressBarPositionStyleTransform = 'scaleX(0)';
-      } else {
-        const offset = scrollPosition - this.state.rpiArea.top;
-        const percentage = Math.round(100 * offset / Math.max(maxHeight, 1));
+      const offset = scrollPosition - this.state.rpiArea.top;
+      const percentage = Math.round((100 * offset) / Math.max(maxHeight, 1));
 
-        if (this.props.progressBar.show) {
-          this.state.virtualDOM.progressBarPositionStyleTransform = `scaleX(${percentage /
-            100})`;
-        }
-
-        if (this.props.percentage.show) {
-          this.state.virtualDOM.progressBarPercentageTextContent = `${percentage}%`;
-        }
-
-        this.state.virtualDOM.progressBarPercentage = `${percentage}`;
+      if (this.props.progressBar.show) {
+        this.state.virtualDOM.progressBarPositionStyleTransform = `scaleX(${percentage /
+          100})`;
       }
+
+      if (this.props.percentage.show) {
+        this.state.virtualDOM.progressBarPercentageTextContent = `${percentage}%`;
+      }
+
+      this.state.virtualDOM.progressBarPercentage = `${percentage}`;
     }
   }
 
@@ -189,7 +189,7 @@ export default class ReadingPositionIndicator {
       // update dom
       this.elems.progressBar.setAttribute(
         'aria-valuenow',
-        progressBarPercentage
+        progressBarPercentage,
       );
     }
   }
