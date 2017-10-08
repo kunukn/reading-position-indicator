@@ -1,5 +1,5 @@
 # reading position indicator
-Small mobile friendly reading position indicator library with no dependencies.
+Small mobile friendly reading position indicator library with no external dependencies.
 
 # demo
 * https://codepen.io/kunukn/full/zNJqEE (version 1.0.3+)
@@ -106,9 +106,10 @@ setTimeout(function waitUntilDomIsReadyLoadingCustomFontsMightOffsetThis() {
 
 
 # development
-* Git clone the project or download it
+* git clone the project or download it
 * npm install
 * npm start
+* open a browser and go to localhost:3000
 
 # build library into dist folder
 * npm run build 
