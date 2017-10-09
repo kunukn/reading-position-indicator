@@ -79,13 +79,12 @@ export function getTransformVendorPrefixAsString() {
     MsTransform: 'msTransform', // IE9+
   };
 
-  /* eslint-disable */
-  for (var name in names) {
+  for (let i = 0; i < names.length; i += 1) {
+    const name = names[i];
     if (el.style[name] !== undefined) {
       return names[name];
     }
   }
-  /* eslint-enable */
   return 'transform';
 }
 
