@@ -1,8 +1,8 @@
 {
   "name": "reading-position-indicator",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Reading position indicator on a webpage",
-  "main": "src/index.js",
+  "main": "dist/rpi.bundle.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "webpack-dev-server --progress --config webpack.config.js",
