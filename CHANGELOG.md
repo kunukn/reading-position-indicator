@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.0.1
+
+* Add dist folder to deploy
+
 ### 2.0.0
 
 * Add ability to define the reading position indicator area
