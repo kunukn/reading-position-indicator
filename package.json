@@ -1,6 +1,6 @@
 {
   "name": "reading-position-indicator",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Reading position indicator on a webpage",
   "main": "dist/rpi.bundle.js",
   "scripts": {
@@ -27,7 +27,9 @@
     "type": "git",
     "url": "git+https://github.com/kunukn/reading-position-indicator.git"
   },
-  "keywords": ["reading position indicator"],
+  "keywords": [
+    "reading position indicator"
+  ],
   "author": "kunukn",
   "license": "ISC",
   "bugs": {

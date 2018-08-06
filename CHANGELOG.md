@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.0.3
+* Ensure displayed percentage does not exceed 100%
+
 ### 2.0.2
 * Change npm main location
 
