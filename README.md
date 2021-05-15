@@ -1,6 +1,12 @@
 # reading position indicator
 Small mobile friendly reading position indicator library with no external dependencies.
 
+# newer library
+A newer library exists here.<br/>
+https://github.com/kunukn/position-indicator
+
+This is more flexible and easier to integrate with UI libraries like React, Vue and Angular.
+
 # demo
 * https://codepen.io/kunukn/full/zNJqEE (version 1.0.3+)
 * https://codepen.io/kunukn/full/ayeMZN/ (version 2.0.0+)
@@ -20,9 +26,9 @@ The progress element `<progress>` has not been used because the code gets messy 
 
 # browser support
 
-![IE](https://cloud.githubusercontent.com/assets/398893/3528325/20373e76-078e-11e4-8e3a-1cb86cf506f0.png) | ![Chrome](https://cloud.githubusercontent.com/assets/398893/3528328/23bc7bc4-078e-11e4-8752-ba2809bf5cce.png) | ![Firefox](https://cloud.githubusercontent.com/assets/398893/3528329/26283ab0-078e-11e4-84d4-db2cf1009953.png) | ![Opera](https://cloud.githubusercontent.com/assets/398893/3528330/27ec9fa8-078e-11e4-95cb-709fd11dac16.png) | ![Safari](https://cloud.githubusercontent.com/assets/398893/3528331/29df8618-078e-11e4-8e3e-ed8ac738693f.png)
+![IE](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/70.0.0/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) | ![Chrome](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/70.0.0/chrome/chrome_48x48.png) | ![Firefox](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/70.0.0/firefox/firefox_48x48.png) | ![Opera](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/70.0.0/opera/opera_48x48.png) | ![Safari](https://cdnjs.cloudflare.com/ajax/libs/browser-logos/70.0.0/safari-ios/safari-ios_48x48.png)
 --- | --- | --- | --- | --- |
-IE 10+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
+IE 11 ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 
 # npm
